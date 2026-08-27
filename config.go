@@ -21,12 +21,14 @@ func LoadSettings() Config {
 	cfg := Config{
 		Language: "pl",
 		HostsEnabled: map[string]bool{
-			"gofile.io":      true,
-			"1fichier.com":  false,
-			"fileditch.com":  true,
-			"vikingfile.com": true,
-			"pixeldrain.com": false,
-			"buzzheavier.com": true,
+			"gofile.io":              true,
+			"1fichier.com":          false,
+			"fileditch.com":          true,
+			"vikingfile.com":         true,
+			"pixeldrain.com":         false,
+			"buzzheavier.com":        true,
+			"litterbox.catbox.moe":   true,
+			"filebin.net":            true,
 		},
 		APIKeys: map[string]string{},
 	}

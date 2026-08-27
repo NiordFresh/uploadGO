@@ -13,14 +13,14 @@ type Messages struct {
 
 var translations = map[string]Messages{
 	"pl": {
-		UploadingToAll:   "Wgrywanie na wszystkie wlaczone hostingi...",
+		UploadingToAll:   "Wgrywanie na wszystkie włączone hostingi...",
 		Results:          "Wyniki:",
-		Errors:           "Bledy:",
+		Errors:           "Błędy:",
 		LinkCopied:       "Link skopiowany do schowka!",
-		ErrorFileNotFound: "Plik nie zostal znaleziony:",
-		ErrorNoHost:      "Zaden host nie jest wlaczony w settings.ini",
-		Usage:            "Uzycie: uploadGO.exe <plik> [--lang pl|en]",
-		PressEnter:       "Nacisnij Enter aby kontynuowac...",
+		ErrorFileNotFound: "Plik nie został znaleziony:",
+		ErrorNoHost:      "Żaden host nie jest włączony w settings.ini",
+		Usage:            "Użycie: uploadGO.exe <plik> [--lang pl|en]",
+		PressEnter:       "Naciśnij Enter aby kontynuować...",
 	},
 	"en": {
 		UploadingToAll:   "Uploading to all enabled hosts...",

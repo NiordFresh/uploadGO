@@ -5,8 +5,18 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"runtime"
+	"syscall"
 	"uploadGO/host"
 )
+
+func init() {
+	if runtime.GOOS == "windows" {
+		kernel32 := syscall.NewLazyDLL("kernel32.dll")
+		proc := kernel32.NewProc("SetConsoleOutputCP")
+		proc.Call(uintptr(65001))
+	}
+}
 
 func main() {
 	langFlag := flag.String("lang", "", "Language (pl or en)")
@@ -97,11 +107,11 @@ func main() {
 
 	for i, r := range allResults {
 		fmt.Println()
-		colorPrint(ColorBold, "  « %d. %s »", i+1, r.Filename)
-		colorPrint(ColorCyan, "  ← URL:    %s", r.URL)
-		colorPrint(ColorCyan, "  ← Size:   %s", FormatSize(r.Size))
+		colorPrint(ColorBold, "  %s %d. %s", EmojiFile, i+1, r.Filename)
+		colorPrint(ColorCyan, "  %s URL:    %s", EmojiLink, r.URL)
+		colorPrint(ColorCyan, "  %s Size:   %s", EmojiUpload, FormatSize(r.Size))
 		if r.RemovalURL != "" {
-			colorPrint(ColorYellow, "  ← Remove: %s", r.RemovalURL)
+			colorPrint(ColorYellow, "  %s Remove: %s", EmojiStop, r.RemovalURL)
 		}
 	}
 
@@ -109,7 +119,7 @@ func main() {
 		fmt.Println()
 		printError(msg.Errors)
 		for _, e := range allErrors {
-			colorPrint(ColorRed, "  ✗ %s", e)
+			colorPrint(ColorRed, "  %s %s", EmojiFail, e)
 		}
 	}
 
@@ -117,7 +127,7 @@ func main() {
 		firstURL := allResults[0].URL
 		if err := CopyToClipboard(firstURL); err == nil {
 			fmt.Println()
-			printSuccess("✓ %s", msg.LinkCopied)
+			printSuccess("%s %s", EmojiSuccess, msg.LinkCopied)
 		}
 	}
 
@@ -152,6 +162,10 @@ func uploadFile(hostName, filePath string, progress *Progress, cfg Config) (*hos
 		h = &host.PixelDrain{APIKey: cfg.APIKeys["pixeldrain.com"]}
 	case "buzzheavier.com":
 		h = &host.BuzzHeavier{}
+	case "litterbox.catbox.moe":
+		h = &host.Litterbox{}
+	case "filebin.net":
+		h = &host.FileBin{}
 	default:
 		return nil, fmt.Errorf("unknown host: %s", hostName)
 	}

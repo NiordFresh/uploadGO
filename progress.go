@@ -18,6 +18,7 @@ type Progress struct {
 	current   int64
 	startTime time.Time
 	done      bool
+	rendered  bool
 }
 
 func NewProgress(total int64) *Progress {
@@ -26,15 +27,16 @@ func NewProgress(total int64) *Progress {
 		current:   0,
 		startTime: time.Now(),
 		done:      false,
+		rendered:  false,
 	}
 }
 
 func (p *Progress) Set(current int64) {
 	p.current = current
-	p.Render()
+	p.render()
 }
 
-func (p *Progress) Render() {
+func (p *Progress) render() {
 	if p.total <= 0 {
 		return
 	}
@@ -78,23 +80,25 @@ func (p *Progress) Render() {
 	spd := ColorGreen + speedStr + ColorReset
 	etaStr := ColorMagenta + eta + ColorReset
 
-	fmt.Printf("\r  %s %s « %s « %s  ETA %s   ", barStr, pct, spd, spd, etaStr)
-
-	if p.current >= p.total && !p.done {
-		p.done = true
-		fullBar := ColorCyan + strings.Repeat(string(barFull), barWidth) + ColorReset
-		fmt.Printf("\r  %s %s « %s « %s  ETA %s   ", fullBar,
-			ColorYellow+"100.0%%"+ColorReset,
-			ColorGreen+"DONE"+ColorReset,
-			ColorGreen+"---"+ColorReset,
-			ColorMagenta+"0s"+ColorReset)
-		fmt.Println()
-	}
+	fmt.Printf("\r  %s %s %s %s %s %s  ETA %s   ", barStr, pct, EmojiPlay, spd, EmojiPlay, spd, etaStr)
 }
 
 func (p *Progress) Done() {
+	if p.done {
+		return
+	}
 	p.current = p.total
-	p.Render()
+	p.done = true
+
+	barWidth := 30
+	fullBar := ColorCyan + strings.Repeat(string(barFull), barWidth) + ColorReset
+	fmt.Printf("\r  %s %s %s %s %s %s  ETA %s   \n", fullBar,
+		ColorYellow+"100.0%%"+ColorReset,
+		EmojiPlay,
+		ColorGreen+"DONE"+ColorReset,
+		EmojiPlay,
+		ColorGreen+"---"+ColorReset,
+		ColorMagenta+"0s"+ColorReset)
 }
 
 type ProgressReader struct {
