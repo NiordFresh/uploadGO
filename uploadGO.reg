@@ -1,0 +1,8 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\*\shell\uploadGO]
+@="Upload with uploadGO ^_^"
+"Icon"="C:\\Users\\Administrator\\Desktop\\uploadGO\\uploadGO.exe"
+
+[HKEY_CLASSES_ROOT\*\shell\uploadGO\command]
+@="\"C:\\Users\\Administrator\\Desktop\\uploadGO\\uploadGO.exe\" \"%1\""
