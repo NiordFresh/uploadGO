@@ -1,8 +1,6 @@
-<center>
-<img width="400" height="140" alt="logo" src="https://github.com/user-attachments/assets/cd5189fb-075d-41f2-9825-1e0fa987397c" />
 
+<img width="400" height="140" alt="logo" src="https://github.com/user-attachments/assets/cd5189fb-075d-41f2-9825-1e0fa987397c" align='center' />
 
-</center>
   
 # uploadGO
   
